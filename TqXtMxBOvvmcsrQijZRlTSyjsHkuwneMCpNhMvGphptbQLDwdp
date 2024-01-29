@@ -1,0 +1,107 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+local Window = OrionLib:MakeWindow({Name = "Block Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "kkk",IntroEnabled = false})
+
+local Tab = Window:MakeTab({
+	Name = "Tab Main",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+Tab:AddButton({
+	Name = "Espawn block",
+	Callback = function()
+	  local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local size = Vector3.new(4, 4, 4)
+local color = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255))
+
+local function spawnColoredBlock()
+    local block = Instance.new("Part")
+    block.Size = size
+    block.Position = humanoidRootPart.Position + Vector3.new(5, 0, 0)
+    block.Anchored = true
+    block.CanCollide = true
+    block.Color = color
+    block.Parent = game.Workspace
+end
+
+spawnColoredBlock()
+  	end    
+})
+
+Tab:AddButton({
+	Name = "Reset Player",
+	Callback = function()
+	   local player = game.Players.LocalPlayer
+local character = player.Character
+
+if character then
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.Health = 0
+    end
+end
+  	end    
+})
+
+ Tab:AddButton({
+	Name = "Bug",
+	Callback = function()
+	     local player = game.Players.LocalPlayer
+
+local function teleportPlayer()
+    while true do
+        local minX, maxX = -100, 100
+        local minY, maxY = 0, 50
+        local minZ, maxZ = -100, 100
+        
+        local randomX = math.random(minX, maxX)
+        local randomY = math.random(minY, maxY)
+        local randomZ = math.random(minZ, maxZ)
+        
+        local randomPosition = Vector3.new(randomX, randomY, randomZ)
+        
+        player.Character:SetPrimaryPartCFrame(CFrame.new(randomPosition))
+        
+        wait(0)
+    end
+end
+
+teleportPlayer()
+  	end    
+})
+
+ Tab:AddButton({
+	Name = "TeleportPoint",
+	Callback = function()
+	      local player = game.Players.LocalPlayer
+
+local function teleportToHighestPoint()
+    local highestPoint = 0
+    local highestPosition = nil
+    
+    for _, part in ipairs(game.Workspace:GetDescendants()) do
+        if part:IsA("BasePart") then
+            local posY = part.Position.Y
+            if posY > highestPoint then
+                highestPoint = posY
+                highestPosition = part.Position
+            end
+        end
+    end
+    
+    if highestPosition then
+        player.Character:SetPrimaryPartCFrame(CFrame.new(highestPosition))
+    else
+        warn("Nenhum ponto alto encontrado.")
+    end
+end
+
+teleportToHighestPoint()
+  	end    
+})
+
+ 
